@@ -1,14 +1,12 @@
-# Pets Name Generator
+# Baby Name Generator
 
-AI Generates cool pet names for you!
-
-![Pets Name Web app demo](/images/Pets-Name-LangChain.gif)
+A simple web application that generates unique baby names based on user preferences using AI. Built with LangChain for language processing and FastAPI, this tool helps parents discover creative and meaningful names for their babies.
 
 ## Uses
 
 - [LangChain](https://python.langchain.com/docs/get_started/introduction.html)
-- [Streamlit](https://streamlit.io/)
+- [FastAPI](https://fastapi.tiangolo.com/)
 
 ## Hosted On
 
-The web-app uses streamlit and is hosted on [Azure Container Apps.](https://azure.microsoft.com/en-ca/products/container-apps)
+The web-app uses FastAPI and is hosted on [...](...)
