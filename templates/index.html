@@ -1,33 +1,48 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Pets Name Generator</title>
+    <title>Baby Name Generator</title>
     <link rel="stylesheet" href="/static/style.css">
+    <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
 </head>
 <body>
     <div class="container">
-        <h1>🐶 Pets Name Generator</h1>
+        <h1>👶 Baby Name Generator</h1>
         <form method="get">
-            <label>What is your pet?</label>
-            <select name="animal_type" required>
+            <label>What is baby's gender?</label>
+            <select name="gender" required>
                 <option value="">Select</option>
-                {% for a in animal_types %}
-                    <option value="{{a}}" {% if a == animal_type %}selected{% endif %}>{{a}}</option>
+                <option value="Male" {% if gender == "Male" %}selected{% endif %}>Male</option>
+                <option value="Female" {% if gender == "Female" %}selected{% endif %}>Female</option>
+            </select>
+            <label>What are you from?</label>
+            <select name="country" required>
+                <option value="">Select</option>
+                {% for c in countries %}
+                    <option value="{{c}}" {% if c == country %}selected{% endif %}>{{c}}</option>
                 {% endfor %}
             </select>
-            <label>What color is your {{ animal_type or 'pet' }}?</label>
-            <input type="text" name="pet_color" maxlength="25" value="{{ pet_color }}" required>
+            <label>What type of name do you want?</label>
+            <select name="name_type" required>
+                <option value="">Select</option>
+                {% for nt in name_types %}
+                    <option value="{{nt}}" {% if nt == name_type %}selected{% endif %}>{{nt}}</option>
+                {% endfor %}
+            </select>
             <button type="submit">Generate Name</button>
         </form>
-        {% if pet_name %}
+        {% if baby_name %}
             <div class="result">
-                <b>Suggested Names:</b><br>
-                <pre style="margin:0">{{ pet_name }}</pre>
+                <div class="names-list">
+                    {% for name in baby_name.split('\n') if name.strip() %}
+                        <span class="name-pill">{{ name }}</span>
+                    {% endfor %}
+                </div>
             </div>
         {% endif %}
     </div>
     <div class="footer">
-        &copy; 2025 Pets Name Generator
+        &copy; 2025 Baby Name Generator
     </div>
 </body>
 </html>

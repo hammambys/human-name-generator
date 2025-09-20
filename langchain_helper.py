@@ -6,7 +6,7 @@ import os
 
 load_dotenv()
 
-def generate_pet_name(animal_type, pet_color):
+def generate_baby_name(gender,country, name_type):
     # Load your Groq API key from environment
     groq_api_key = os.getenv("GROQ_API_KEY")
 
@@ -20,20 +20,21 @@ def generate_pet_name(animal_type, pet_color):
 
     # Prompt template
     prompt_template_name = PromptTemplate(
-        input_variables=['animal_type', 'pet_color'],
+        input_variables=['gender', 'country', 'name_type'],
         template=(
-            "I have a {animal_type} pet and I want a cool name for it, "
-            "it is {pet_color} in color. Suggest me five cool names for my pet."
+            "I have a {gender} baby coming soon and I want a cool name for it, "
+            "I'm from {country} and I want a {name_type} name. "
+            "Suggest me 5 names, each on a new line. "
             "Don't include any explanation, just give me the names."
             "Be creative and fun!"
         )
     )
 
     # Build chain
-    name_chain = LLMChain(llm=llm, prompt=prompt_template_name, output_key="pet_name")
+    name_chain = LLMChain(llm=llm, prompt=prompt_template_name, output_key="baby_name")
 
-    response = name_chain({'animal_type': animal_type, 'pet_color': pet_color})
+    response = name_chain({'gender':gender, 'country': country, 'name_type': name_type})
     return response
 
 if __name__ == "__main__":
-    print(generate_pet_name("Dog", "Black"))
+    print(generate_baby_name("Male", "Tunisia", "Modern"))

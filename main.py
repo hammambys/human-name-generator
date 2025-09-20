@@ -1,25 +1,42 @@
-import streamlit as st
+from fastapi import FastAPI, Request
+from fastapi.responses import HTMLResponse
+from fastapi.staticfiles import StaticFiles
+from fastapi.templating import Jinja2Templates
+from fastapi.middleware.cors import CORSMiddleware
 import langchain_helper as lch
+from utils import countries, name_types
 
-st.title("🐶 Pets Name Generator")
+app = FastAPI()
 
-animal_type = st.sidebar.selectbox("What is your pet?", ("Dog", "Cat", "Hamster", "Rat", "Snake", "Lizard", "Cow"))
-
-animal_labels = {
-    "Dog": "What color is your dog?",
-    "Cat": "What color is your cat?",
-    "Hamster": "What color is your hamster?",
-    "Rat": "What color is your rat?",
-    "Snake": "What color is your snake?",
-    "Lizard": "What color is your lizard?",
-    "Cow": "What color is your cow?",
-}
-
-pet_color = st.sidebar.text_area(
-    label=animal_labels[animal_type],
-    max_chars=25
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
-if pet_color:
-    response = lch.generate_pet_name(animal_type, pet_color)
-    st.text(response['pet_name'])
+app.mount("/static", StaticFiles(directory="static"), name="static")
+templates = Jinja2Templates(directory="templates")
+
+
+
+@app.get("/", response_class=HTMLResponse)
+async def root(request: Request,gender:str="", country: str = "", name_type: str = ""):
+    baby_name = ""
+    if gender and country and name_type:
+        response = lch.generate_baby_name(gender,country, name_type)
+        baby_name = response['baby_name']
+
+    return templates.TemplateResponse(
+        "index.html",
+        {
+            "request": request,
+            "countries": countries,
+            "name_types":name_types,
+            "gender":gender,
+            "country": country,
+            "name_type": name_type,
+            "baby_name": baby_name,
+        }
+    )
