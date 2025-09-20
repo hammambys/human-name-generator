@@ -15,7 +15,7 @@ def generate_pet_name(animal_type, pet_color):
         model="llama-3.3-70b-versatile",
         api_key=groq_api_key,
         base_url="https://api.groq.com/openai/v1",
-        temperature=0.7
+        temperature=0.9
     )
 
     # Prompt template
@@ -24,6 +24,8 @@ def generate_pet_name(animal_type, pet_color):
         template=(
             "I have a {animal_type} pet and I want a cool name for it, "
             "it is {pet_color} in color. Suggest me five cool names for my pet."
+            "Don't include any explanation, just give me the names."
+            "Be creative and fun!"
         )
     )
 

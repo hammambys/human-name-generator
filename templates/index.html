@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Pets Name Generator</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>🐶 Pets Name Generator</h1>
+        <form method="get">
+            <label>What is your pet?</label>
+            <select name="animal_type" required>
+                <option value="">Select</option>
+                {% for a in animal_types %}
+                    <option value="{{a}}" {% if a == animal_type %}selected{% endif %}>{{a}}</option>
+                {% endfor %}
+            </select>
+            <label>What color is your {{ animal_type or 'pet' }}?</label>
+            <input type="text" name="pet_color" maxlength="25" value="{{ pet_color }}" required>
+            <button type="submit">Generate Name</button>
+        </form>
+        {% if pet_name %}
+            <div class="result">
+                <b>Suggested Names:</b><br>
+                <pre style="margin:0">{{ pet_name }}</pre>
+            </div>
+        {% endif %}
+    </div>
+    <div class="footer">
+        &copy; 2025 Pets Name Generator
+    </div>
+</body>
+</html>
