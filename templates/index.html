@@ -15,7 +15,7 @@
                 <option value="Male" {% if gender == "Male" %}selected{% endif %}>Male</option>
                 <option value="Female" {% if gender == "Female" %}selected{% endif %}>Female</option>
             </select>
-            <label>What are you from?</label>
+            <label>Where are you from?</label>
             <select name="country" required>
                 <option value="">Select</option>
                 {% for c in countries %}
